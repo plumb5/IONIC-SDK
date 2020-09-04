@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-plumb5" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>Plumb5</name>
+    <js-module name="Plumb5" src="www/Plumb5.js">
+        <clobbers target="cordova.plugins.Plumb5" />
+    </js-module>
+    <platform name="android">
+        <resource-file src="src/scripts/google-services.json" target="app/google-services.json" />
+
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="Plumb5">
+                <param name="android-package" value="com.plumb5.plugin.Plumb5" />
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
+        <config-file parent="/manifest" target="AndroidManifest.xml">
+        
+            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+            <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+            <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+       
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <service android:name="com.plumb5.plugin.P5FirebaseMessagingService" android:exported="false">
+                <intent-filter>
+                    <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                </intent-filter>
+            </service>
+            <meta-data android:name="PLUMB5_ACCOUNT_ID" android:value="2" />
+            <meta-data android:name="PLUMB5_API_KEY" android:value="cf714fa8b5e7e92b5e471bb5eaba0b5ebf89da12b60c" />
+            <meta-data android:name="PLUMB5_BASE_URL" android:value="http://mobtrk.plumb5.in/" />
+            <meta-data android:name="com.google.firebase.messaging.default_notification_channel_id" android:value="plumb5" />
+        </config-file>
+        <!-- <framework src="com.android.support:multidex:1.0.3" />
+        <framework src="com.squareup.retrofit2:retrofit:2.1.0" />
+        <framework src="com.squareup.retrofit2:converter-jackson:2.1.0" />
+        <framework src="com.github.bumptech.glide:glide:4.9.0" />
+        <framework src="com.google.code.gson:gson:2.8.6" /> -->
+
+
+        <source-file src="src/android/Plumb5.java" target-dir="src/com/plumb5/plugin/" />
+        <source-file src="src/android/P5LifeCycle.java" target-dir="src/com/plumb5/plugin/" />
+        <source-file src="src/android/MyApplication.java" target-dir="src/com/plumb5/plugin/" />
+        <source-file src="src/android//P5ConnectionDetector.java" target-dir="src/com/plumb5/plugin/" />
+        <source-file src="src/android/P5Constants.java" target-dir="src/com/plumb5/plugin/" />
+        <source-file src="src/android/P5DialogBox.java" target-dir="src/com/plumb5/plugin/" />
+        <source-file src="src/android/P5DialogPicture.java" target-dir="src/com/plumb5/plugin/" />
+        <source-file src="src/android/P5FirebaseMessagingService.java" target-dir="src/com/plumb5/plugin/" />
+        <source-file src="src/android/P5PictureNotification.java" target-dir="src/com/plumb5/plugin/" />
+        <source-file src="src/android/P5Location.java" target-dir="src/com/plumb5/plugin/" />
+        <source-file src="src/android/P5SendNotification.java" target-dir="src/com/plumb5/plugin/" />
+        <source-file src="src/android/ServiceGenerator.java" target-dir="src/com/plumb5/plugin/" />
+        <framework src="src/scripts/build.gradle" custom="true" type="gradleReference" />
+        <hook type="after_platform_add" src="src/scripts/editManifest.js" />
+        <hook type="after_plugin_install" src="src/scripts/editManifest.js" />
+        <hook type="before_build" src="src/scripts/editManifest.js" />
+    </platform>
+
+</plugin>

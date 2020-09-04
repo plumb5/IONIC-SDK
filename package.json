@@ -1,0 +1,17 @@
+{
+  "name": "cordova-plugin-plumb5",
+  "version": "0.0.1",
+  "description": "",
+  "cordova": {
+    "id": "cordova-plugin-plumb5",
+    "platforms": [
+      "android"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": "Anantaloop",
+  "license": "ISC"
+}
