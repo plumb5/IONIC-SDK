@@ -30,11 +30,10 @@ public class P5SendNotification {
     public static final String MyPREFERENCES = "MyPrefs";
 
 
-    static void Send(Context context, int PushId, int Action, String notificationTicker, String notificationTitle, String nMessage, String nSubtext, String nImage, int clkAction, String nIntent, String Parameter, String ExtraAction, String GeofenceName, String BeaconName, String workflowId) {
+    static void Send(Context context, int PushId, int Action, String notificationTicker, String notificationTitle, String nMessage, String nSubtext, String nImage, int clkAction, String nIntent, String Parameter, String ExtraAction, String GeofenceName, String BeaconName, String workflowId,String P5UniqueId) {
 
         try {
-            SharedPreferences pref = context.getApplicationContext().getSharedPreferences("p5Init", 0);
-            String AppKey = pref.getString("appKey", null);
+            String apiKey = Plumb5.appKey;
 
             Plumb5 eng = new Plumb5();
             Intent intent = new Intent();
@@ -43,7 +42,7 @@ public class P5SendNotification {
                 int len1 = eng.getMetadata(context, P5Constants.PLUMB5_BASE_URL).lastIndexOf('/');
                 String getnewurl = eng.getMetadata(context, P5Constants.PLUMB5_BASE_URL).substring(0, len1 - 1);
                 String geturl = getnewurl.substring(0, getnewurl.lastIndexOf('/'));
-                Uri uri = Uri.parse(geturl + "/Redirect.aspx?AppKey=" + AppKey + "&PushId=" + PushId + "&SessionId=" + P5LifeCycle.getP5Session() + "&DeviceId=" + eng.getDeviceId(context) + "&RedirectUrl=" + nIntent);
+                Uri uri = Uri.parse(nIntent);
                 intent = new Intent(Intent.ACTION_VIEW, uri);
             } else if (clkAction == 0 || clkAction == 1) {
 
@@ -65,6 +64,7 @@ public class P5SendNotification {
                 } else {
                     intent.putExtra("PushId", PushId);
                     intent.putExtra("workflowdataId", workflowId);
+                    intent.putExtra("P5UniqueId", P5UniqueId);
                     intent.putExtra("sentFromNotiFication", true);
                     intent.setClassName(context, nIntent);
                 }
@@ -75,7 +75,7 @@ public class P5SendNotification {
             JSONObject json = new JSONObject();
             try {
 
-                json.put("AppKey", AppKey);
+                json.put("apiKey", apiKey);
                 json.put("MobileFormId", PushId);
                 json.put("DeviceId", eng.getDeviceId(context));
                 json.put("SessionId", P5LifeCycle.getP5Session());
@@ -87,7 +87,7 @@ public class P5SendNotification {
                 json.put("BeaconName", BeaconName);
                 json.put("WorkFlowDataId", workflowId);
                 json.put("SendReport", 0);
-                json.put("P5UniqueId", "");
+                json.put("P5UniqueId", P5UniqueId);
                 json.put("ButtonName", "");
                 json.put("WidgetName", "");
                 String getresult = json.toString().replace("\\", "").replace("\"{", "{").replace("}\"", "}");
@@ -115,12 +115,6 @@ public class P5SendNotification {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Notifications", NotificationManager.IMPORTANCE_DEFAULT);
 
-                // Configure the notification channel.
-//            notificationChannel.setDescription("p");
-//            notificationChannel.enableLights(true);
-//            notificationChannel.setLightColor(Color.RED);
-//            notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
-//            notificationChannel.enableVibration(true);
                 notificationManager.createNotificationChannel(notificationChannel);
             }
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID);
@@ -151,6 +145,7 @@ public class P5SendNotification {
                             }
                             btnReceive.putExtra("PushId", PushId);
                             btnReceive.putExtra("workflowid", workflowId);
+                            btnReceive.putExtra("P5UniqueId", P5UniqueId);
                             btnReceive.setAction(context.getPackageName() + "." + actionno);
                             PendingIntent pendingIntentYes = PendingIntent.getBroadcast(context, 0, btnReceive, PendingIntent.FLAG_UPDATE_CURRENT);
 

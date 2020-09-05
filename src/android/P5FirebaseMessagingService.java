@@ -12,6 +12,7 @@ public class P5FirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = "P5FCM";
     Plumb5 eng = new Plumb5();
     String workflowId = null;
+    String P5UniqueId = "";
 
     @Override
     public void onNewToken(String token) {
@@ -39,34 +40,6 @@ public class P5FirebaseMessagingService extends FirebaseMessagingService {
 
 
     private void sendNotification(Map<String, String> data) {
-//        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//        String NOTIFICATION_CHANNEL_ID = "plumb5";
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Notifications", NotificationManager.IMPORTANCE_DEFAULT);
-//
-//            // Configure the notification channel.
-////            notificationChannel.setDescription("p");
-////            notificationChannel.enableLights(true);
-////            notificationChannel.setLightColor(Color.RED);
-////            notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
-////            notificationChannel.enableVibration(true);
-//            notificationManager.createNotificationChannel(notificationChannel);
-//        }
-//
-//
-//        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
-//
-//        notificationBuilder.setAutoCancel(true)
-//                .setDefaults(Notification.DEFAULT_ALL)
-//                .setWhen(System.currentTimeMillis())
-//                .setSmallIcon(R.drawable.common_full_open_on_phone)
-//                .setTicker("Hearty365")
-//                //     .setPriority(Notification.PRIORITY_MAX)
-//                .setContentTitle("Default notification")
-//                .setContentText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
-//                .setContentInfo("Info");
-//
-//        notificationManager.notify(/*notification id*/1, notificationBuilder.build());
 
 
         if (P5LifeCycle.getactivity == null) {
@@ -88,8 +61,6 @@ public class P5FirebaseMessagingService extends FirebaseMessagingService {
             this.getApplicationContext().registerReceiver(plyf.dMyAlarmReceiver, new IntentFilter(pkg + ".alarm"));
 
 
-
-
             //Log.d("p5", "notification hhh"+p5geo.LatLngList);
         }
         //end activate............
@@ -108,54 +79,61 @@ public class P5FirebaseMessagingService extends FirebaseMessagingService {
                 } else {
                     workflowId = "0";
                 }
-
-
-
-                    try {
-                        String nExtraAction = data.get("extraaction").toString();
-                        int nclkAction = Integer.parseInt(data.get("clickaction").toString());
-                        int nAction = 1, nPushId = 0;
-                        String nTicker = "Lead", nTitle = "Plumb5 - Lead", nIntent = "", nParameter = "";
-
-                        String[] atitle = title.split("\\^");
-                        if (atitle.length == 5) {
-                            nPushId = Integer.parseInt(atitle[0].toString());
-                            nAction = Integer.parseInt(atitle[1].toString());
-                            nTicker = atitle[2].toString();
-                            nTitle = atitle[3].toString();
-                            nIntent = atitle[4].toString();
-
-                            if (nclkAction == 0 || nclkAction == 1) {
-                                if (nIntent.contains("|")) {
-                                    String[] aintent = nIntent.split("\\|");
-                                    nIntent = aintent[0].toString();
-                                    nParameter = aintent[1].toString();
-                                } else {
-                                    nIntent = nIntent;
-                                }
-                            }
-
-                            String nMessage = "", nSubtext = "", nImage = "";
-                            String[] amessage = message.split("\\^");
-                            if (amessage.length > 0) {
-                                nMessage = amessage[0].toString();
-                                nSubtext = amessage[1].toString();
-                                nImage = amessage[2].toString();
-                            }
-                            //Log.d("Plumb5", nAction + " ~ " + nTicker + " ~ " + nTitle + " ~ " + message + " ~ " + nIntent);
-                            P5SendNotification Noti = new P5SendNotification();
-                            Noti.Send(this, nPushId, nAction, nTicker, nTitle, nMessage, nSubtext, nImage, nclkAction, nIntent, nParameter, nExtraAction, "", "", workflowId);
-                        } else {
-                            Log.d(TAG, "Problem with parameters");
-                        }
-
-                    } catch (Exception ex) {
-                        Log.d(TAG, ex.getMessage());
+                if (data.containsKey("P5UniqueId")) {
+                    if (data.get("P5UniqueId") != null) {
+                        P5UniqueId = data.get("P5UniqueId").toString();
+                    } else {
+                        P5UniqueId = "0";
                     }
+                } else {
+                    P5UniqueId = "0";
                 }
 
+                try {
+                    String nExtraAction = data.get("extraaction").toString();
+                    int nclkAction = Integer.parseInt(data.get("clickaction").toString());
+                    int nAction = 1, nPushId = 0;
+                    String nTicker = "Lead", nTitle = "Plumb5 - Lead", nIntent = "", nParameter = "";
 
-}
+                    String[] atitle = title.split("\\^");
+                    if (atitle.length == 5) {
+                        nPushId = Integer.parseInt(atitle[0].toString());
+                        nAction = Integer.parseInt(atitle[1].toString());
+                        nTicker = atitle[2].toString();
+                        nTitle = atitle[3].toString();
+                        nIntent = atitle[4].toString();
+
+                        if (nclkAction == 0 || nclkAction == 1) {
+                            if (nIntent.contains("|")) {
+                                String[] aintent = nIntent.split("\\|");
+                                nIntent = aintent[0].toString();
+                                nParameter = aintent[1].toString();
+                            } else {
+                                nIntent = nIntent;
+                            }
+                        }
+
+                        String nMessage = "", nSubtext = "", nImage = "";
+                        String[] amessage = message.split("\\^");
+                        if (amessage.length > 0) {
+                            nMessage = amessage[0].toString();
+                            nSubtext = amessage[1].toString();
+                            nImage = amessage[2].toString();
+                        }
+                        //Log.d("Plumb5", nAction + " ~ " + nTicker + " ~ " + nTitle + " ~ " + message + " ~ " + nIntent);
+                        P5SendNotification Noti = new P5SendNotification();
+                        Noti.Send(this, nPushId, nAction, nTicker, nTitle, nMessage, nSubtext, nImage, nclkAction, nIntent, nParameter, nExtraAction, "", "", workflowId,P5UniqueId);
+                    } else {
+                        Log.d(TAG, "Problem with parameters");
+                    }
+
+                } catch (Exception ex) {
+                    Log.d(TAG, ex.getMessage());
+                }
+            }
+
+
+        }
 
     }
 }

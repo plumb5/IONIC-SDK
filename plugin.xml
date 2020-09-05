@@ -33,7 +33,7 @@
             </service>
             <meta-data android:name="PLUMB5_ACCOUNT_ID" android:value="2" />
             <meta-data android:name="PLUMB5_API_KEY" android:value="cf714fa8b5e7e92b5e471bb5eaba0b5ebf89da12b60c" />
-            <meta-data android:name="PLUMB5_BASE_URL" android:value="http://mobtrk.plumb5.in/" />
+            <meta-data android:name="PLUMB5_BASE_URL" android:value="https://mobtrk.plumb5.in/" />
             <meta-data android:name="com.google.firebase.messaging.default_notification_channel_id" android:value="plumb5" />
         </config-file>
         <!-- <framework src="com.android.support:multidex:1.0.3" />

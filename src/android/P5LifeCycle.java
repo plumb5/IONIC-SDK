@@ -414,7 +414,6 @@ public class P5LifeCycle implements Application.ActivityLifecycleCallbacks {
         public void onReceive(Context context, Intent intent) {
 
             try {
-                SharedPreferences pref = context.getApplicationContext().getSharedPreferences("p5Init", 0);
                 String AppKey = P5.getMetadata(context, P5Constants.PLUMB5_API_KEY);
                 String PackAge = BuildConfig.APPLICATION_ID;
                 if (context.getPackageName().toLowerCase().contains(PackAge.toLowerCase()) && AppKey.length() > 0) {
@@ -424,6 +423,16 @@ public class P5LifeCycle implements Application.ActivityLifecycleCallbacks {
                     String getExtraValue = bdl.getString("ebtnpramvalue");
                     int getPushId = bdl.getInt("PushId");
                     String workflowid = bdl.getString("workflowid");
+                    String P5UniqueId = "";
+                    if (bdl.containsKey("P5UniqueId")) {
+                        if (bdl.get("P5UniqueId") != null) {
+                            P5UniqueId = bdl.get("P5UniqueId").toString();
+                        } else {
+                            P5UniqueId = "0";
+                        }
+                    } else {
+                        P5UniqueId = "0";
+                    }
 
                     String getAction = intent.getAction();
                     //Log.i("HI", context+"/"+getValue + "/" + getExtraValue+"/"+getAction);
@@ -576,7 +585,7 @@ public class P5LifeCycle implements Application.ActivityLifecycleCallbacks {
                         json.put("ButtonName", getName);
                         json.put("WorkFlowDataId", workflowid);
                         json.put("SendReport", 0);
-                        json.put("P5UniqueId", "");
+                        json.put("P5UniqueId", P5UniqueId);
                         json.put("ButtonName", "");
                         json.put("WidgetName", "");
                         String getresult = json.toString().replace("\\", "").replace("\"{", "{").replace("}\"", "}");

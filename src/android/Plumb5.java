@@ -85,7 +85,7 @@ public class Plumb5 extends CordovaPlugin {
                 this.setUserDetails(args, callbackContext);
                 return true;
             case "tracking":
-                 this.tracking(args, callbackContext);
+                this.tracking(args, callbackContext);
                 return true;
             case "notificationSubscribe":
 
@@ -200,6 +200,8 @@ public class Plumb5 extends CordovaPlugin {
 
     private void deviceRegistration(CallbackContext callbackContext) {
 
+
+
         SharedPreferences pref = this.cordova.getActivity().getSharedPreferences(P5Constants.P5_INIT_KEY, 0);
         gcmRegistrationId = pref.getString(P5Constants.PROPERTY_REG_ID, "");
         SharedPreferences.Editor editor = pref.edit();
@@ -212,13 +214,15 @@ public class Plumb5 extends CordovaPlugin {
                 json.put("Manufacturer", Build.MANUFACTURER);
                 json.put("DeviceName", Build.MODEL);
                 json.put("OS", "Android");
+                json.put("OsVersion", String.valueOf(android.os.Build.VERSION.SDK_INT));
                 json.put("AppVersion", BuildConfig.VERSION_NAME);
                 json.put("CarrierName", getCarrierName(this.cordova.getActivity()));
-                json.put("DeviceDate", new Date().toString());
+                json.put("DeviceDate", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(new Date()));
                 json.put("GcmRegId", gcmRegistrationId);
                 json.put("Resolution", getScreenResolution(this.cordova.getActivity()));
                 json.put("InstalledStatus", true);
-                json.put("IsInstalledStatusDate", new Date().toString());
+                json.put("GcmSettingsId", 0);
+                json.put("IsInstalledStatusDate", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(new Date()));
 
             } catch (Exception e) {
                 Log.v(TAG, "Please check the parameters \n error -");
@@ -417,12 +421,12 @@ public class Plumb5 extends CordovaPlugin {
         Map<String, Object> inAppDetails = new HashMap<>();
 
         try {
-           // inAppDetails = new ObjectMapper().readValue(json.toString(), HashMap.class);
+            // inAppDetails = new ObjectMapper().readValue(json.toString(), HashMap.class);
             inAppDetails.put(P5Constants.DEVICE_ID, getDeviceId(this.cordova.getActivity()));
             inAppDetails.put(P5Constants.SESSION_ID, P5LifeCycle.getP5Session());
-              inAppDetails.put(P5Constants.SCREEN_NAME, "");
-             inAppDetails.put(P5Constants.EVENT_ID, "");
-           inAppDetails.put(P5Constants.EVENT_VALUE, "");
+            inAppDetails.put(P5Constants.SCREEN_NAME, "");
+            inAppDetails.put(P5Constants.EVENT_ID, "");
+            inAppDetails.put(P5Constants.EVENT_VALUE, "");
             inAppDetails.put(P5Constants.PAGE_PARAMETER, "");
 
         } catch (Exception e) {
