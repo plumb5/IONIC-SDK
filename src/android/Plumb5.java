@@ -60,8 +60,6 @@ public class Plumb5 extends CordovaPlugin {
     static JSONArray jsonFormData = new JSONArray();
     static JSONArray jsonTransData = new JSONArray();
     static int StaticFormId;
-    private String pageParms = "null";
-    private String screenParms = "null";
     private static String uniqueID = null;
     static boolean isAuthenticate = false;
     public ServiceGenerator.API api;
@@ -315,7 +313,6 @@ public class Plumb5 extends CordovaPlugin {
             tracking = new ObjectMapper().readValue(args.getJSONObject(0).toString(), HashMap.class);
             tracking.put("SessionId", P5LifeCycle.getP5Session());
             tracking.put("CarrierName", getCarrierName(this.cordova.getActivity()));
-            tracking.put("ScreenName", screenParms);
             tracking.put("CampaignId", 0);
             tracking.put("WorkFlowDataId", 0);
             tracking.put("IsNewSession", P5LifeCycle.isExpired());
@@ -330,7 +327,7 @@ public class Plumb5 extends CordovaPlugin {
             tracking.put("CountryCode", P5LifeCycle.CountryCode);
             tracking.put("Latitude", String.valueOf(P5LifeCycle.Latitude));
             tracking.put("Longitude", String.valueOf(P5LifeCycle.Longitude));
-            tracking.put("PageParameter", pageParms);
+         
 
 
         } catch (Exception e) {

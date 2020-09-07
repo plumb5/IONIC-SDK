@@ -113,34 +113,38 @@ public class P5LifeCycle implements Application.ActivityLifecycleCallbacks {
         } else {
             preTime = date.getTime();
         }
-        tracking(getactivity);
+        //tracking(getactivity);
     }
 
     @Override
     public void onActivityResumed(Activity activity) {
         Log.d(TAG, "onActivityResumed");
+        preTime = new Date().getTime();
     }
 
     @Override
     public void onActivityPaused(Activity activity) {
         Log.d(TAG, "onActivityPaused");
+        preTime = new Date().getTime();
     }
 
     @Override
     public void onActivityStopped(Activity activity) {
         Log.d(TAG, "onActivityStopped");
+        preTime = new Date().getTime();
     }
 
     @Override
     public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
         Log.d(TAG, "onActivitySaveInstanceState");
+        preTime = new Date().getTime();
     }
 
     @Override
     public void onActivityDestroyed(Activity activity) {
         Log.d(TAG, "onActivityDestroyed");
-        Date date = new Date();
-        preTime = date.getTime();
+    
+        preTime = new Date().getTime();
     }
 
     public static String getP5Session() {
