@@ -327,7 +327,7 @@ public class Plumb5 extends CordovaPlugin {
             tracking.put("CountryCode", P5LifeCycle.CountryCode);
             tracking.put("Latitude", String.valueOf(P5LifeCycle.Latitude));
             tracking.put("Longitude", String.valueOf(P5LifeCycle.Longitude));
-         
+
 
 
         } catch (Exception e) {
@@ -485,7 +485,8 @@ public class Plumb5 extends CordovaPlugin {
                 .getSharedPreferences(P5Constants.P5_INIT_KEY, 0)
                 .edit();
         // your init code here
-
+        P5LifeCycle.cordovaActivity = cordova;
+        P5LifeCycle.cordovaWebView = webView;
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this.cordova.getActivity(), new OnSuccessListener<InstanceIdResult>() {
             @Override
             public void onSuccess(InstanceIdResult instanceIdResult) {
@@ -628,6 +629,15 @@ public class Plumb5 extends CordovaPlugin {
 
     }
 
+    public void navigateScreen(String screen, CordovaInterface cordovaActivity, CordovaWebView cordovaWebView) {
+        final String json = "{'routeUrl':'"+screen+"'}";
+        cordovaActivity.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                cordovaWebView.loadUrl("javascript:cordova.fireDocumentEvent('onPushNotification'," + json + ");");
+            }
+        });
+    }
 }
 
 

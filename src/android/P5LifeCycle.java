@@ -27,6 +27,9 @@ import android.util.Log;
 import android.widget.Toast;
 import com.cordova.plumb.demo.BuildConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.apache.cordova.CordovaInterface;
+import org.apache.cordova.CordovaWebView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,6 +55,8 @@ import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class P5LifeCycle implements Application.ActivityLifecycleCallbacks {
     protected static final String TAG = "p5 - LifeCycle";
+    public static CordovaInterface cordovaActivity;
+    public static CordovaWebView cordovaWebView;
     static String p5Session = "";
     static Activity getactivity;
     private int screenCount = 0, CampaignId = 0, Offline = 1;
@@ -63,6 +68,8 @@ public class P5LifeCycle implements Application.ActivityLifecycleCallbacks {
     P5Location p5location;
     Plumb5 P5 = new Plumb5();
     ServiceGenerator.API api;
+
+
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
@@ -86,6 +93,7 @@ public class P5LifeCycle implements Application.ActivityLifecycleCallbacks {
             afilter.addAction(pkg + ".7");
             afilter.addAction(pkg + ".8");
             afilter.addAction(pkg + ".9");
+            afilter.addAction(pkg + ".10");
             activity.getApplicationContext().registerReceiver(MyActionReceiver, afilter);
             activity.getApplicationContext().registerReceiver(dMyAlarmReceiver, new IntentFilter(pkg + ".alarm"));
             String accountId = P5.getMetadata(getactivity, P5Constants.PLUMB5_ACCOUNT_ID);
@@ -143,7 +151,7 @@ public class P5LifeCycle implements Application.ActivityLifecycleCallbacks {
     @Override
     public void onActivityDestroyed(Activity activity) {
         Log.d(TAG, "onActivityDestroyed");
-    
+
         preTime = new Date().getTime();
     }
 
@@ -425,6 +433,7 @@ public class P5LifeCycle implements Application.ActivityLifecycleCallbacks {
                     String getName = bdl.getString("btnname");
                     String getValue = bdl.getString("ebtnpram");
                     String getExtraValue = bdl.getString("ebtnpramvalue");
+                    String screen = bdl.getString("screenName");
                     int getPushId = bdl.getInt("PushId");
                     String workflowid = bdl.getString("workflowid");
                     String P5UniqueId = "";
@@ -572,6 +581,14 @@ public class P5LifeCycle implements Application.ActivityLifecycleCallbacks {
                         smsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(smsIntent);
 
+                    }else if (getAction.equals(pkg + ".10")) {
+
+                        Intent intent1 = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());
+                        intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        context.startActivity(intent1);
+                        P5.navigateScreen(screen,cordovaActivity,cordovaWebView);
+
+
                     }
 
                     //Insert loading................
@@ -599,7 +616,7 @@ public class P5LifeCycle implements Application.ActivityLifecycleCallbacks {
                     } catch (JSONException ignored) {
                     }
 
-                    if (getAction.equals(pkg + ".0")) {
+                    if (getAction.equals(pkg + ".0")||getAction.equals(pkg + ".3")) {
                         NotificationManager notificationManager = (NotificationManager) getactivity.getSystemService(NOTIFICATION_SERVICE);
                         notificationManager.cancel(getPushId);
                     }
@@ -676,35 +693,35 @@ public class P5LifeCycle implements Application.ActivityLifecycleCallbacks {
 
         try {
             if(!pushResponse.containsKey("ScreenName"))
-            pushResponse.put("ScreenName",screenName);
+                pushResponse.put("ScreenName",screenName);
 
 
 
 
-        Call<ResponseBody> responseBodyCall = Objects.requireNonNull(ServiceGenerator.createService(ServiceGenerator.API.class, appKey, accountId, serviceURL)).PushResponse(pushResponse);
-        responseBodyCall.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
+            Call<ResponseBody> responseBodyCall = Objects.requireNonNull(ServiceGenerator.createService(ServiceGenerator.API.class, appKey, accountId, serviceURL)).PushResponse(pushResponse);
+            responseBodyCall.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                    if (response.isSuccessful()) {
 
 
-                    Log.v(TAG, "Push details sent successful");
+                        Log.v(TAG, "Push details sent successful");
 
-                } else {
+                    } else {
 
-                    Log.e(TAG, "Push details  failed");
+                        Log.e(TAG, "Push details  failed");
 
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.e(TAG, "Push details failed");
-                Log.e(TAG, t.getMessage());
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Log.e(TAG, "Push details failed");
+                    Log.e(TAG, t.getMessage());
 
-                t.printStackTrace();
-            }
-        });
+                    t.printStackTrace();
+                }
+            });
         } catch (Exception e) {
             Log.e(TAG, "Push details failed");
             e.printStackTrace();
