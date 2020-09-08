@@ -205,7 +205,7 @@ public class Plumb5 extends CordovaPlugin {
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(P5Constants.PACKAGE_NAME, packageName);
         editor.apply();
-        checkPlayServices(callbackContext)
+        checkPlayServices(callbackContext);
         
             Map<String, Object> json = new HashMap<>();
             try {
