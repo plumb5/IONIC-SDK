@@ -205,7 +205,8 @@ public class Plumb5 extends CordovaPlugin {
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(P5Constants.PACKAGE_NAME, packageName);
         editor.apply();
-        if (checkPlayServices(callbackContext)) {
+        checkPlayServices(callbackContext)
+        
             Map<String, Object> json = new HashMap<>();
             try {
                 json.put("DeviceId", getDeviceId(this.cordova.getActivity()));
@@ -252,7 +253,7 @@ public class Plumb5 extends CordovaPlugin {
                     t.printStackTrace();
                 }
             });
-        }
+        
 
 
     }
@@ -418,13 +419,12 @@ public class Plumb5 extends CordovaPlugin {
         Map<String, Object> inAppDetails = new HashMap<>();
 
         try {
-            // inAppDetails = new ObjectMapper().readValue(json.toString(), HashMap.class);
+            inAppDetails = new ObjectMapper().readValue(json.toString(), HashMap.class);
             inAppDetails.put(P5Constants.DEVICE_ID, getDeviceId(this.cordova.getActivity()));
             inAppDetails.put(P5Constants.SESSION_ID, P5LifeCycle.getP5Session());
-            inAppDetails.put(P5Constants.SCREEN_NAME, "");
             inAppDetails.put(P5Constants.EVENT_ID, "");
             inAppDetails.put(P5Constants.EVENT_VALUE, "");
-            inAppDetails.put(P5Constants.PAGE_PARAMETER, "");
+
 
         } catch (Exception e) {
             e.printStackTrace();
