@@ -39,6 +39,11 @@
                     <action android:name="com.google.firebase.MESSAGING_EVENT" />
                 </intent-filter>
             </service>
+            <receiver android:exported="false" android:name="com.plumb5.plugin.P5BootCompleteReceiver" android:permission="android.intent.action.BOOT_COMPLETED">
+                <intent-filter>
+                    <action android:name="android.intent.action.BOOT_COMPLETED" />
+                </intent-filter>
+            </receiver>
             <meta-data android:name="PLUMB5_ACCOUNT_ID" android:value="$PLUMB5_ACCOUNT_ID" />
             <meta-data android:name="PLUMB5_API_KEY" android:value="$PLUMB5_API_KEY" />
             <meta-data android:name="PLUMB5_BASE_URL" android:value="$PLUMB5_BASE_URL" />
