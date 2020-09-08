@@ -295,7 +295,7 @@ public class P5LifeCycle implements Application.ActivityLifecycleCallbacks {
             tracking.put("Latitude", String.valueOf(P5LifeCycle.Latitude));
             tracking.put("Longitude", String.valueOf(P5LifeCycle.Longitude));
             tracking.put("PageParameter", "");
-            tracking.put("CarrierName", p5GetScreenName(context));
+            tracking.put("CarrierName", Plumb5.getCarrierName(context));
 
         } catch (Exception e) {
             Log.v(TAG, "Please check the parameters \n error -");

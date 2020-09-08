@@ -69,8 +69,7 @@ public class P5SendNotification {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("screenName",nIntent);
                     intent.setAction( context.getPackageName() + "." + "10");
-//                    intent = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
                 }
             }
             //Log.d("p5", nIntent + "nghjhgjn" + Parameter);

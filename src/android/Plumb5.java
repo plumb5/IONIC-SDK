@@ -565,7 +565,7 @@ public class Plumb5 extends CordovaPlugin {
         return width + "*" + height;
     }
 
-    private static String getCarrierName(Context context) {
+    public static String getCarrierName(Context context) {
         if (Build.VERSION.SDK_INT > 22) {
             //for dual sim mobile
             SubscriptionManager localSubscriptionManager = SubscriptionManager.from(context);
