@@ -31,9 +31,16 @@ App analytics SDK for IONIC based applications
     *   PLUMB5_ACCOUNT_ID
     *   PLUMB5_API_KEY
     *   PLUMB5_BASE_URL
+    
 *   File
     *   Google-services.json
     *   ic_p5_logo.png(16px X 16px or 14px X 14px)
+    
+*   Permissions(optional)
+    *   Location
+    *   Phone State
+    *   Phone Number
+    *   Wake Lock
 
 ## Pre installation
 
