@@ -33,7 +33,7 @@ App analytics SDK for IONIC based applications
     *   PLUMB5_BASE_URL
 *   File
     *   Google-services.json
-    *   ic_p5_logo.png(16*16/14*14)
+    *   ic_p5_logo.png(16px X 16px or 14px X 14px)
 *   SDK
     *   Download: [https://github.com/plumb5/IONIC-SDK](https://github.com/plumb5/IONIC-SDK)
 
