@@ -97,7 +97,7 @@ From root of application
 
 *   Using Cordova:
 
-    ```
+    ```smalltak
     cordova plugin rm cordova-plugin-plumb5
     ```
 
@@ -105,8 +105,8 @@ From root of application
     *   Please ignore the error after removing the plugin
 *   Using Ionic:
 
-    ```
-    cordova plugin rm cordova-plugin-plumb5
+    ```smalltalk
+    ionic cordova plugin rm cordova-plugin-plumb5
     ```
 
 
@@ -115,7 +115,7 @@ From root of application
 
 ## **For Ionic**
 
-Add  <code>app.component.ts</code></strong>
+Add  <strong>app.component.ts</strong>
 
 
 ```smalltalk
@@ -126,26 +126,25 @@ import { Router, NavigationStart, ActivatedRoute} from '@angular/router';
 declare var cordova: any;
 var p5 = cordova.plugins.Plumb5.init();
 
+
 export class AppComponent {
   constructor(
     private platform: Platform,
     public router: Router,
     private pageParameter:ActivatedRoute
+
   ) {
     this.initializeApp();
     p5.setup();
 
-    this.router.events.forEach((event) => {
+//Plumb5 lifecycle and in-app
+this.router.events.forEach((event) => { 
 
+if (event instanceof NavigationStart) {
 
-      if (event instanceof NavigationStart) {
-         p5.tracking([{ScreenName:event.url}], (success) => {
-          console.log(success);
-        }, (error) => {
-          console.log(error);
-        });
-      }
-    });
+p5.tracking([{ ScreenName: event.url, PageParameter: "" }]); p5.pushResponsePost([{ ScreenName: event.url, PageParameter: "" }]); 
+} 
+});
 
   }
 
@@ -156,8 +155,7 @@ initializeApp() {
         let routeUrl = e.routeUrl
         this.router.navigate([routeUrl]);
       });
-
-
+  
      });
   }
 
