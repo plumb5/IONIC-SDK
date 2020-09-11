@@ -316,7 +316,7 @@ public class Plumb5 extends CordovaPlugin {
             tracking.put("CarrierName", getCarrierName(this.cordova.getActivity()));
             tracking.put("CampaignId", 0);
             tracking.put("WorkFlowDataId", 0);
-            tracking.put("IsNewSession", P5LifeCycle.isExpired());
+            tracking.put("IsNewSession", P5LifeCycle.isExpired);
             tracking.put("DeviceId", getDeviceId(this.cordova.getActivity()));
             tracking.put("Offline", 0);
             tracking.put("TrackDate", dateFormat.format(date));

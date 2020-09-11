@@ -56,6 +56,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -66,6 +67,9 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
+
+import static com.plumb5.plugin.P5LifeCycle.cordovaActivity;
+import static com.plumb5.plugin.P5LifeCycle.cordovaWebView;
 
 
 public class P5DialogBox {
@@ -491,7 +495,7 @@ public class P5DialogBox {
                 if (getImageUrl.length() > 0) {
                     dShow = -1;
                 }//no need "dialog.show();" if "-1"
-                new P5DialogPicture(context, BgImage, bgimg, p5dialog, fieldWidth, diagLayout, fieldBottom,dShow).execute();
+                new P5DialogPicture(context, BgImage, bgimg, p5dialog, fieldWidth, diagLayout, fieldBottom,dShow);
             }
 
 
@@ -515,13 +519,17 @@ public class P5DialogBox {
                 getImageUrl = "";
                 int dShow = 1;
                 if (Interval == 0) {
-                    new P5DialogPicture(context, imgtempUrl, imgn, p5dialog, fieldImgWidth, diagLayout, fieldBottom,dShow).execute();
+                    new P5DialogPicture(context, imgtempUrl, imgn, p5dialog, fieldImgWidth, diagLayout, fieldBottom,dShow);
                 } else {
                     final Timer t = new Timer();
                     t.schedule(new TimerTask() {
                         public void run() {
                             int dShow = 1;
-                            new P5DialogPicture(context, imgtempUrl, imgn, p5dialog, fieldImgWidth, diagLayout, fieldBottom,dShow).execute();
+                            try {
+                                new P5DialogPicture(context, imgtempUrl, imgn, p5dialog, fieldImgWidth, diagLayout, fieldBottom,dShow);
+                            } catch (MalformedURLException e) {
+                                e.printStackTrace();
+                            }
                             t.cancel();
                         }
                     }, 1000 * Interval);
@@ -1088,15 +1096,15 @@ public class P5DialogBox {
 
                     if (getAction.equals("Screen")) {
                         intent.setClassName(context, getRedirect);
-                        if (eng.isP5IntentAvailable(context, intent)) {
-                            context.startActivity(intent);
+                        if (new P5ConnectionDetector(context).isConnectingToInternet()) {
+                            eng.navigateScreen(Redirect, cordovaActivity, cordovaWebView);
                         } else {
-                            Log.d("p5", "wrong intent.");
+                            Log.d("p5", "No internet");
                         }
                     } else {
                         int lene = getRedirect.lastIndexOf('.');
                         intent.setComponent(new ComponentName(getRedirect.substring(0, lene), getRedirect));
-                        context.startActivity(intent);
+                        eng.navigateScreen(Redirect, cordovaActivity, cordovaWebView);
                     }
                 } else if (getAction.equals("Browser") && getRedirect.contains("http")) {
                     Uri uri = Uri.parse(getRedirect);

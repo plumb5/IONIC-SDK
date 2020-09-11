@@ -25,6 +25,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+
 import com.cordova.plumb.demo.BuildConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -33,6 +34,7 @@ import org.apache.cordova.CordovaWebView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -57,6 +59,7 @@ public class P5LifeCycle implements Application.ActivityLifecycleCallbacks {
     protected static final String TAG = "p5 - LifeCycle";
     public static CordovaInterface cordovaActivity;
     public static CordovaWebView cordovaWebView;
+    public static boolean isExpired = false;
     static String p5Session = "";
     static Activity getactivity;
     private int screenCount = 0, CampaignId = 0, Offline = 1;
@@ -68,7 +71,8 @@ public class P5LifeCycle implements Application.ActivityLifecycleCallbacks {
     P5Location p5location;
     Plumb5 P5 = new Plumb5();
     ServiceGenerator.API api;
-
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+    Date date = new Date();
 
 
     @Override
@@ -99,7 +103,7 @@ public class P5LifeCycle implements Application.ActivityLifecycleCallbacks {
             String accountId = P5.getMetadata(getactivity, P5Constants.PLUMB5_ACCOUNT_ID);
             String serviceURL = P5.getMetadata(getactivity, P5Constants.PLUMB5_BASE_URL);
             String appKey = P5.getMetadata(getactivity, P5Constants.PLUMB5_API_KEY);
-            api = ServiceGenerator.createService(ServiceGenerator.API.class, appKey, accountId,serviceURL);
+            api = ServiceGenerator.createService(ServiceGenerator.API.class, appKey, accountId, serviceURL);
 
         } catch (Exception ex) {
             Log.d(TAG, ex.getMessage());
@@ -113,51 +117,45 @@ public class P5LifeCycle implements Application.ActivityLifecycleCallbacks {
         getP5locationCity(activity);
 
         Log.d(TAG, "onActivityStarted");
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-        Date date = new Date();
-        long diffInMs = date.getTime() - preTime;
-        if (diffInMs > 300000 || preTime == 0) {
-            preTime = date.getTime();
-        } else {
-            preTime = date.getTime();
-        }
-        //tracking(getactivity);
+
+
     }
 
     @Override
     public void onActivityResumed(Activity activity) {
         Log.d(TAG, "onActivityResumed");
-        preTime = new Date().getTime();
+
+
     }
 
     @Override
     public void onActivityPaused(Activity activity) {
         Log.d(TAG, "onActivityPaused");
-        preTime = new Date().getTime();
+
+
     }
 
     @Override
     public void onActivityStopped(Activity activity) {
         Log.d(TAG, "onActivityStopped");
-        preTime = new Date().getTime();
+
     }
 
     @Override
     public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
         Log.d(TAG, "onActivitySaveInstanceState");
-        preTime = new Date().getTime();
+
     }
 
     @Override
     public void onActivityDestroyed(Activity activity) {
         Log.d(TAG, "onActivityDestroyed");
-
         preTime = new Date().getTime();
     }
 
     public static String getP5Session() {
         Date date = new Date();
-        //Log.d("Plumb5post", date.getTime() - preTime +"chk"+p5Session);
+
 
 
         if (p5Session.equals("") || date.getTime() - preTime > 300000) {
@@ -173,18 +171,16 @@ public class P5LifeCycle implements Application.ActivityLifecycleCallbacks {
             p5Session = p5Session.replace(":", "");
 
             preTime = date.getTime();
+            isExpired = true;
+        }else {
+            isExpired = false;
         }
 
         //Log.d("Plumb5post", "chk"+p5Session);
         return p5Session;
     }
 
-    public static boolean isExpired() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-        Date date = new Date();
-        long diffInMs = date.getTime() - preTime;
-        return (diffInMs <= 300000 && preTime != 0);
-    }
+
 
     public void getP5locationCity(Activity activity) {
         try {
@@ -282,7 +278,7 @@ public class P5LifeCycle implements Application.ActivityLifecycleCallbacks {
             tracking.put("ScreenName", p5GetScreenName(context));
             tracking.put("CampaignId", 0);
             tracking.put("WorkFlowDataId", "0");
-            tracking.put("IsNewSession", P5LifeCycle.isExpired());
+            tracking.put("IsNewSession", isExpired);
             tracking.put("DeviceId", P5.getDeviceId(context));
             tracking.put("Offline", 0);
             tracking.put("TrackDate", dateFormat.format(date));
@@ -581,12 +577,12 @@ public class P5LifeCycle implements Application.ActivityLifecycleCallbacks {
                         smsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(smsIntent);
 
-                    }else if (getAction.equals(pkg + ".10")) {
+                    } else if (getAction.equals(pkg + ".10")) {
 
                         Intent intent1 = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());
                         intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         context.startActivity(intent1);
-                        P5.navigateScreen(screen,cordovaActivity,cordovaWebView);
+                        P5.navigateScreen(screen, cordovaActivity, cordovaWebView);
 
 
                     }
@@ -612,11 +608,11 @@ public class P5LifeCycle implements Application.ActivityLifecycleCallbacks {
                         String getresult = json.toString().replace("\\", "").replace("\"{", "{").replace("}\"", "}");
                         //Log.d(TAG, getresult);
                         // new P5HttpRequest(context, eng.p5GetServiceUrl(getactivity) +getactivity.getResources().getString(R.string.FORM_RESPONSES), getresult).execute();
-                        callPushSend(context,new ObjectMapper().readValue(getresult, HashMap.class));
+                        callPushSend(context, new ObjectMapper().readValue(getresult, HashMap.class));
                     } catch (JSONException ignored) {
                     }
 
-                    if (getAction.equals(pkg + ".0")||getAction.equals(pkg + ".3")) {
+                    if (getAction.equals(pkg + ".0") || getAction.equals(pkg + ".3")) {
                         NotificationManager notificationManager = (NotificationManager) getactivity.getSystemService(NOTIFICATION_SERVICE);
                         notificationManager.cancel(getPushId);
                     }
@@ -659,7 +655,7 @@ public class P5LifeCycle implements Application.ActivityLifecycleCallbacks {
             e.printStackTrace();
             Log.e(TAG, "Please check the parameters \n error -" + e.getLocalizedMessage());
         }
-        Call<String> responseBodyCall =  Objects.requireNonNull(ServiceGenerator.createService(ServiceGenerator.API.class, appKey, accountId, serviceURL)).EventResponses(eventDetails);
+        Call<String> responseBodyCall = Objects.requireNonNull(ServiceGenerator.createService(ServiceGenerator.API.class, appKey, accountId, serviceURL)).EventResponses(eventDetails);
         responseBodyCall.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, retrofit2.Response<String> response) {
@@ -685,17 +681,15 @@ public class P5LifeCycle implements Application.ActivityLifecycleCallbacks {
         });
     }
 
-    void callPushSend(Context context,    Map<String, Object> pushResponse) {
+    void callPushSend(Context context, Map<String, Object> pushResponse) {
         String accountId = P5.getMetadata(context, P5Constants.PLUMB5_ACCOUNT_ID);
         String serviceURL = P5.getMetadata(context, P5Constants.PLUMB5_BASE_URL);
         String appKey = P5.getMetadata(context, P5Constants.PLUMB5_API_KEY);
 
 
         try {
-            if(!pushResponse.containsKey("ScreenName"))
-                pushResponse.put("ScreenName",screenName);
-
-
+            if (!pushResponse.containsKey("ScreenName"))
+                pushResponse.put("ScreenName", screenName);
 
 
             Call<ResponseBody> responseBodyCall = Objects.requireNonNull(ServiceGenerator.createService(ServiceGenerator.API.class, appKey, accountId, serviceURL)).PushResponse(pushResponse);

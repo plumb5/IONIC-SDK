@@ -49,13 +49,6 @@
             <meta-data android:name="PLUMB5_BASE_URL" android:value="$PLUMB5_BASE_URL" />
             <meta-data android:name="com.google.firebase.messaging.default_notification_channel_id" android:value="plumb5" />
         </config-file>
-        <!-- <framework src="com.android.support:multidex:1.0.3" />
-        <framework src="com.squareup.retrofit2:retrofit:2.1.0" />
-        <framework src="com.squareup.retrofit2:converter-jackson:2.1.0" />
-        <framework src="com.github.bumptech.glide:glide:4.9.0" />
-        <framework src="com.google.code.gson:gson:2.8.6" /> -->
-
-
         <source-file src="src/android/Plumb5.java" target-dir="src/com/plumb5/plugin/" />
         <source-file src="src/android/P5LifeCycle.java" target-dir="src/com/plumb5/plugin/" />
         <source-file src="src/android/MyApplication.java" target-dir="src/com/plumb5/plugin/" />
@@ -72,6 +65,17 @@
         <hook type="after_platform_add" src="src/scripts/editManifest.js" />
         <hook type="after_plugin_install" src="src/scripts/editManifest.js" />
         <hook type="before_build" src="src/scripts/editManifest.js" />
+    </platform>
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+
+            <feature name="Plumb5">
+                <param name="ios-package" value="com.plumb5.plugin.Plumb5" />
+            </feature>
+        </config-file>
+        <source-file src="src/ios/Plumb5.swift" />
+        <dependency id="cordova-plugin-add-swift-support" version="2.0.2"/>
+
     </platform>
 
 </plugin>
