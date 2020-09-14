@@ -400,7 +400,7 @@ public class P5DialogBox {
             //Log.d("p5", "mmfff");
 
             //Insert loading................
-            if (!(ScreenName + "." + MobileFormId).toLowerCase().equals(OldPage.toLowerCase())) {
+       
                 JSONObject json = new JSONObject();
                 try {
                     json.put("AppKey", eng.p5GetAppKey());
@@ -427,7 +427,7 @@ public class P5DialogBox {
                 //new P5HttpRequest(context, ServiceUrl + context.getResources().getString(R.string.FORM_RESPONSES), getresult).execute();
                 new P5LifeCycle().callPushSend(context, new ObjectMapper().readValue(getresult, HashMap.class));
                 OldPage = ScreenName + "." + MobileFormId;
-            }
+            
             //end loading................
 
             //set bgcolor and border and radios for main layout....
