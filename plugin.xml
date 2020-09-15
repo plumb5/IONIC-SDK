@@ -67,6 +67,7 @@
         <hook type="before_build" src="src/scripts/editManifest.js" />
     </platform>
     <platform name="ios">
+        <preference name="UseSwiftLanguageVersion" value="5" />
         <config-file target="config.xml" parent="/*">
 
             <feature name="Plumb5">
@@ -74,6 +75,7 @@
             </feature>
         </config-file>
         <source-file src="src/ios/Plumb5.swift" />
+        
         <dependency id="cordova-plugin-add-swift-support" version="2.0.2"/>
 
     </platform>
