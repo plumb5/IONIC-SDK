@@ -400,7 +400,7 @@ public class P5DialogBox {
             //Log.d("p5", "mmfff");
 
             //Insert loading................
-       
+
                 JSONObject json = new JSONObject();
                 try {
                     json.put("AppKey", eng.p5GetAppKey());
@@ -427,7 +427,7 @@ public class P5DialogBox {
                 //new P5HttpRequest(context, ServiceUrl + context.getResources().getString(R.string.FORM_RESPONSES), getresult).execute();
                 new P5LifeCycle().callPushSend(context, new ObjectMapper().readValue(getresult, HashMap.class));
                 OldPage = ScreenName + "." + MobileFormId;
-            
+
             //end loading................
 
             //set bgcolor and border and radios for main layout....
@@ -1099,6 +1099,7 @@ public class P5DialogBox {
                         if (new P5ConnectionDetector(context).isConnectingToInternet()) {
                             P5dialogdismiss();
                             eng.navigateScreen(Redirect, cordovaActivity, cordovaWebView);
+
                         } else {
                             Log.d("p5", "No internet");
                         }

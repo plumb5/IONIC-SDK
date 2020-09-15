@@ -43,7 +43,8 @@ public class P5SendNotification {
                 String getnewurl = eng.getMetadata(context, P5Constants.PLUMB5_BASE_URL).substring(0, len1 - 1);
                 String geturl = getnewurl.substring(0, getnewurl.lastIndexOf('/'));
                 Uri uri = Uri.parse(nIntent);
-                intent = new Intent(Intent.ACTION_VIEW, uri);
+                intent.putExtra("ebtnpram", uri.toString());
+                intent.setAction( context.getPackageName() + "." + "3");
             } else if (clkAction == 0 || clkAction == 1) {
 
                 if (Parameter.indexOf(',') > 0 && Parameter.length() > 1) {
