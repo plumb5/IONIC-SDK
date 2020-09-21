@@ -624,8 +624,6 @@ public class P5DialogBox {
             et.setInputType(InputType.TYPE_CLASS_PHONE);
         } else if (fieldCategory.equals("Number")) {
             et.setInputType(InputType.TYPE_CLASS_NUMBER);
-        } else if (fieldCategory.equals("Number")) {
-            et.setInputType(InputType.TYPE_CLASS_NUMBER);
         } else if (fieldCategory.equals("Multiline")) {
             et.setMinLines(2);
             et.setVerticalScrollBarEnabled(true);
@@ -634,8 +632,6 @@ public class P5DialogBox {
 
         et.setTextSize(fontSize);
         et.setTextColor(Color.parseColor(fontColor));
-        //et.requestFocus();
-//        et.setError("*");
 
         allFields.add(Position, et);
         return et;

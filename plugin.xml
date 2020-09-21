@@ -71,7 +71,7 @@
         <config-file target="config.xml" parent="/*">
 
             <feature name="Plumb5">
-                <param name="ios-package" value="com.plumb5.plugin.Plumb5" />
+                <param name="ios-package" value="Plumb5" />
             </feature>
         </config-file>
         <source-file src="src/ios/Plumb5.swift" />
