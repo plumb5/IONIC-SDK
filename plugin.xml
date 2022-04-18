@@ -68,6 +68,17 @@
     </platform>
     <platform name="ios">
         <preference name="UseSwiftLanguageVersion" value="5" />
+
+        <config-file target="*-Info.plist" parent="MoEngage">
+    		<dict>
+        		<key>PLUMB5_ACCOUNT_ID</key>
+                <string>$PLUMB5_ACCOUNT_ID</string>
+                <key>PLUMB5_API_KEY</key>
+                <string>$PLUMB5_API_KEY</string>
+                <key>PLUMB5_BASE_URL</key>
+        		<string>$PLUMB5_BASE_URL</string>
+    		</dict>
+		</config-file>
         <config-file target="config.xml" parent="/*">
 
             <feature name="Plumb5">
@@ -77,6 +88,16 @@
         <source-file src="src/ios/Plumb5.swift" />
         
         <dependency id="cordova-plugin-add-swift-support" version="2.0.2"/>
+
+        <!-- <podspec>
+            <config>
+              <source url="https://github.com/CocoaPods/Specs.git"/>
+            </config>
+            <pods use-frameworks="true">
+              <pod name="Alamofire" spec="4.9.1" />
+              <pod name="SDWebImage" spec="~> 5.0" />
+            </pods>
+          </podspec> -->
 
     </platform>
 
