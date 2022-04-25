@@ -8,13 +8,15 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Build;
-import android.support.v4.app.ActivityCompat;
+
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
+
+import androidx.core.app.ActivityCompat;
 
 import com.cordova.plumb.demo.BuildConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -206,7 +208,7 @@ public class Plumb5 extends CordovaPlugin {
         editor.putString(P5Constants.PACKAGE_NAME, packageName);
         editor.apply();
         checkPlayServices(callbackContext);
-        
+
             Map<String, Object> json = new HashMap<>();
             try {
                 json.put("DeviceId", getDeviceId(this.cordova.getActivity()));
@@ -253,7 +255,7 @@ public class Plumb5 extends CordovaPlugin {
                     t.printStackTrace();
                 }
             });
-        
+
 
 
     }

@@ -13,8 +13,10 @@ import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.support.v4.app.NotificationCompat;
+
 import android.util.Log;
+
+import androidx.core.app.NotificationCompat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -136,7 +138,7 @@ public class P5SendNotification {
             if (ExtraAction.length() > 0) {
                 try {
                     String[] btnText = ExtraAction.split("\\|");
-                    if (btnText.length > 0) {                                       
+                    if (btnText.length > 0) {
                         for (int i = 0; i < btnText.length; i++) {
                             String[] btnValue = btnText[i].split("\\^");
                             String btnname = btnValue[0];

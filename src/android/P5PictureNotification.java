@@ -10,8 +10,10 @@ import android.graphics.drawable.Drawable;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.v4.app.NotificationCompat;
+
 import android.util.Log;
+
+import androidx.core.app.NotificationCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
@@ -29,6 +31,7 @@ public class P5PictureNotification  {
     private PendingIntent pIntent;
     private int sIcon;
     NotificationCompat.Builder builder;
+
 
     public P5PictureNotification(NotificationCompat.Builder builder, Context context, String ticker, String title, PendingIntent pIntent, String message, String nSubtext, String imageUrl, int sIcon, int pushId) {
         super();
