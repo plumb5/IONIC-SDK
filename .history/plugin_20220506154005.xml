@@ -13,7 +13,7 @@
     <preference name="PLUMB5_API_KEY" />
     <preference name="PLUMB5_BASE_URL" default=" "/>
     <platform name="android">
-       
+        <resource-file src="src/scripts/google-services.json" target="app/google-services.json" />
 
         <config-file parent="/*" target="res/xml/config.xml">
             <feature name="Plumb5">
