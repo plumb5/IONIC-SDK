@@ -1,0 +1,119 @@
+{
+  "project_info": {
+    "project_number": "291276159145",
+    "firebase_url": "https://plumb5-61adb.firebaseio.com",
+    "project_id": "plumb5-61adb",
+    "storage_bucket": "plumb5-61adb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:291276159145:android:bd2e383cc645904b3551b8",
+        "android_client_info": {
+          "package_name": "com.cordova.plumb.demo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "291276159145-ba9vf3r7fr4ft9spdcv3lmcn16h035vi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXz7MF8Iv29czZDfd7djeDh28aFh0Bn8A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "291276159145-ba9vf3r7fr4ft9spdcv3lmcn16h035vi.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "291276159145-vps7efvdru2h29uor2s2rarjrcfo85cg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.cordova.plumb.demo"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:291276159145:android:5d5230fbbf24ca783551b8",
+        "android_client_info": {
+          "package_name": "com.cordova.plumb5.demo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "291276159145-ba9vf3r7fr4ft9spdcv3lmcn16h035vi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXz7MF8Iv29czZDfd7djeDh28aFh0Bn8A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "291276159145-ba9vf3r7fr4ft9spdcv3lmcn16h035vi.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "291276159145-vps7efvdru2h29uor2s2rarjrcfo85cg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.cordova.plumb.demo"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:291276159145:android:f52ffe99dc638fdf",
+        "android_client_info": {
+          "package_name": "io.cordova.hellocordova"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "291276159145-ba9vf3r7fr4ft9spdcv3lmcn16h035vi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXz7MF8Iv29czZDfd7djeDh28aFh0Bn8A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "291276159145-ba9vf3r7fr4ft9spdcv3lmcn16h035vi.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "291276159145-vps7efvdru2h29uor2s2rarjrcfo85cg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.cordova.plumb.demo"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
