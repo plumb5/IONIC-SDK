@@ -611,7 +611,6 @@ public class P5DialogBox {
         et.setBackground(gd);
         et.setGravity(fieldOrientation);
         et.setTypeface(null, fiedStyle);
-        et.setHintTextColor(Color.GRAY);
 
         if (textValue.length() > 0) {
             et.setHint(textValue);
@@ -880,7 +879,7 @@ public class P5DialogBox {
         final int month = calendar.get(Calendar.MONTH);
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        calet.setHintTextColor(Color.GRAY);
+
         if (textValue.length() > 0) {
             calet.setHint(textValue);
         } else {

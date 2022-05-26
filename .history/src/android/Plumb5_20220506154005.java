@@ -18,7 +18,7 @@ import android.view.WindowManager;
 
 import androidx.core.app.ActivityCompat;
 
-import androidx.multidex.BuildConfig;
+import com.cordova.plumb.demo.BuildConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;

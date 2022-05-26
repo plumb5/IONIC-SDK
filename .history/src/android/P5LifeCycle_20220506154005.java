@@ -26,7 +26,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.multidex.BuildConfig;
+import com.cordova.plumb.demo.BuildConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.apache.cordova.CordovaInterface;
